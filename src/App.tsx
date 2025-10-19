@@ -40,28 +40,37 @@ function App() {
 
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
-        <span>Input</span>
+      <div style={{ marginBottom: '30px' }}>
+        <div style={{ marginBottom: '5px' }}>
+          <strong>Input: </strong>
+          <select
+            value={selectedLanguage}
+            onChange={(e) => setSelectedLanguage(e.target.value as Language)}
+            style={{ padding: '5px' }}
+          >
+            {Object.keys(LANGUAGES).map((lang) => (
+              <option key={lang} value={lang}>
+                {lang}
+              </option>
+            ))}
+          </select>
+        </div>
         <textarea
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          style={{ padding: '5px', flex: '1', minHeight: '100px', resize: 'vertical', fontSize: '1rem' }}
-        />
-        <select
-          value={selectedLanguage}
-          onChange={(e) => setSelectedLanguage(e.target.value as Language)}
-          style={{ padding: '5px' }}
-        >
-          {Object.keys(LANGUAGES).map((lang) => (
-            <option key={lang} value={lang}>
-              {lang}
-            </option>
-          ))}
-        </select>
+          style={{
+            width: '100%',
+            minHeight: '100px',
+            resize: 'vertical',
+            fontSize: '1rem',
+            boxSizing: 'border-box',
+            textAlign: 'center',
+            display: 'block',
+          }} />
       </div>
-      <div style={{ marginTop: '10px' }}>
-        <strong>Hyphenated text:</strong>
-        <div style={{ padding: '10px', border: '1px solid #ccc', marginTop: '5px', wordWrap: 'break-word', overflowWrap: 'break-word' }}>
+      <div>
+        <strong style={{ marginBottom: '5px' }}>Hyphenated text:</strong>
+        <div style={{ padding: '10px', border: '1px solid #ccc', wordWrap: 'break-word', overflowWrap: 'break-word' }}>
           {result || 'Type something to see hyphenation...'}
         </div>
       </div>
