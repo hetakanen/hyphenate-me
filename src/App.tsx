@@ -39,14 +39,13 @@ function App() {
   }, [inputText, selectedLanguage])
 
   return (
-    <div style={{ padding: '20px' }}>
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '20px' }}>
+    <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
         <span>Input</span>
-        <input
-          type="text"
+        <textarea
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          style={{ padding: '5px' }}
+          style={{ padding: '5px', flex: '1', minHeight: '100px', resize: 'vertical', fontSize: '1rem' }}
         />
         <select
           value={selectedLanguage}
@@ -62,7 +61,7 @@ function App() {
       </div>
       <div style={{ marginTop: '10px' }}>
         <strong>Hyphenated text:</strong>
-        <div style={{ padding: '10px', border: '1px solid #ccc', marginTop: '5px' }}>
+        <div style={{ padding: '10px', border: '1px solid #ccc', marginTop: '5px', wordWrap: 'break-word', overflowWrap: 'break-word' }}>
           {result || 'Type something to see hyphenation...'}
         </div>
       </div>
