@@ -24,7 +24,7 @@ function App() {
       if (inputText) {
         try {
           const hyphenateFn = LANGUAGES[selectedLanguage];
-          const result = await hyphenateFn(inputText, { hyphenChar: '- ­' });
+          const result = await hyphenateFn(inputText, { hyphenChar: '- ­', minWordLength: 3 });
           setResult(result);
         } catch (error) {
           console.error('Hyphenation error:', error);
