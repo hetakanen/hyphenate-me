@@ -1,4 +1,4 @@
-# Hyphenate Me! :curly_loop:
+# :pencil2: Hyphenate Me! :clipboard:
 
 ## Overview
 
