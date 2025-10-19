@@ -15,9 +15,9 @@ const LANGUAGES = {
 type Language = keyof typeof LANGUAGES
 
 function App() {
-  const [inputText, setInputText] = useState('')
-  const [result, setResult] = useState('')
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>('en-us')
+  const [inputText, setInputText] = useState('');
+  const [result, setResult] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>('en-us');
 
   useEffect(() => {
     const processText = async () => {
@@ -36,25 +36,20 @@ function App() {
     }
 
     processText();
-  }, [inputText, selectedLanguage])
+  }, [inputText, selectedLanguage]);
+
 
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '30px' }}>
-        <div style={{ marginBottom: '5px' }}>
+      <Container titleArea={
+        <>
           <strong>Input: </strong>
-          <select
-            value={selectedLanguage}
-            onChange={(e) => setSelectedLanguage(e.target.value as Language)}
-            style={{ padding: '5px' }}
-          >
-            {Object.keys(LANGUAGES).map((lang) => (
-              <option key={lang} value={lang}>
-                {lang}
-              </option>
-            ))}
-          </select>
-        </div>
+          <LanguageSelector
+            languages={Object.keys(LANGUAGES) as Language[]}
+            selectedLanguage={selectedLanguage}
+            onLanguageChange={setSelectedLanguage} />
+        </>
+      }>
         <textarea
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
@@ -67,15 +62,40 @@ function App() {
             textAlign: 'center',
             display: 'block',
           }} />
-      </div>
-      <div>
-        <strong style={{ marginBottom: '5px' }}>Hyphenated text:</strong>
+      </Container>
+      <Container titleArea={<strong>Hyphenated text: </strong>}>
         <div style={{ padding: '10px', border: '1px solid #ccc', wordWrap: 'break-word', overflowWrap: 'break-word' }}>
           {result || 'Type something to see hyphenation...'}
         </div>
-      </div>
+      </Container>
     </div>
   )
 }
 
+function Container({ children, titleArea }: { children: React.ReactNode, titleArea: React.ReactNode }) {
+  return (
+    <div style={{ marginBottom: '30px' }}>
+      <div style={{ marginBottom: '5px' }}>
+        {titleArea}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function LanguageSelector({ languages, selectedLanguage, onLanguageChange }: { languages: Language[], selectedLanguage: Language, onLanguageChange: (lang: Language) => void }) {
+  return (
+    <select
+      value={selectedLanguage}
+      onChange={(e) => onLanguageChange(e.target.value as Language)}
+      style={{ padding: '5px' }}
+    >
+      {languages?.map((lang) => (
+        <option key={lang} value={lang}>
+          {lang}
+        </option>
+      ))}
+    </select>
+  );
+}
 export default App
