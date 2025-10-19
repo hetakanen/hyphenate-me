@@ -1,34 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
+import { hyphenate } from 'hyphen/en'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [inputText, setInputText] = useState('')
+  const [result, setResult] = useState('')
+
+  useEffect(() => {
+    const processText = async () => {
+      if (inputText) {
+        try {
+          const result = await hyphenate(inputText, { hyphenChar: '- ­' }); 
+          setResult(result);
+        } catch (error) {
+          console.error('Hyphenation error:', error);
+          setResult(inputText);
+        }
+      } else {
+        setResult('');
+      }
+    }
+
+    processText();
+  }, [inputText])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ padding: '20px' }}>
+      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '20px' }}>
+        <span>input</span>
+        <input
+          type="text"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          style={{ padding: '5px' }}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div style={{ marginTop: '10px' }}>
+        <strong>Hyphenated text:</strong>
+        <div style={{ padding: '10px', border: '1px solid #ccc', marginTop: '5px' }}>
+          {result || 'Type something to see hyphenation...'}
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
